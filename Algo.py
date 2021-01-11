@@ -149,8 +149,8 @@ class AStar:
     def move_to_lowest_f_score(self, nodes_position: [tuple]):
         if len(nodes_position) > 0:
             f_scores = self.get_f_scores(nodes_position)
-            index_min_f_scores = f_scores.index(min(reversed(f_scores)))  # f_scores.index(min(reversed(f_scores)))
-            min_f_score_node_position = nodes_position[::-1][index_min_f_scores]  # nodes_position[::-1][index_min_f_scores]
+            index_min_f_scores = f_scores.index(min(reversed(f_scores)))
+            min_f_score_node_position = nodes_position[::-1][index_min_f_scores]
             self.game.change_current(min_f_score_node_position)
             return min_f_score_node_position
 
@@ -163,5 +163,4 @@ class AStar:
             parents.append(current_parent_position)
             self.game.grid.grid[current_parent_position[0]][current_parent_position[1]].Type = UI.CellType.Path
             current_position = current_parent_position
-
         return parents
