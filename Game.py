@@ -30,7 +30,7 @@ class Game:
                 if cell.Type == UI.CellType.Start:
                     return cell.x, cell.y
 
-    def is_win(self):
+    def do_win(self):
         current = self.get_current_position()
         goal = self.grid.goal_position
         if current == goal:
@@ -51,7 +51,7 @@ class Game:
         self.grid.grid[current[0]][current[1]].Type = UI.CellType.Visited
         self.grid.grid[new_current[0]][new_current[1]].Type = UI.CellType.Current
 
-    def get_neighbors(self):
+    def get_neighbors_position(self):
         neighbors = []
         current = self.get_current_position()
         if current is None:
@@ -60,17 +60,23 @@ class Game:
 
         if x-1 > 0:
             if self.grid.grid[x-1][y].Type != UI.CellType.Blocked:
-                neighbors.append(self.grid.grid[x-1][y])
+                neighbors.append((self.grid.grid[x-1][y].x, self.grid.grid[x-1][y].y))
         if y-1 > 0:
             if self.grid.grid[x][y-1].Type != UI.CellType.Blocked:
-                neighbors.append(self.grid.grid[x][y-1])
+                neighbors.append((self.grid.grid[x][y-1].x, self.grid.grid[x][y-1].y))
         if x+1 < self.grid.height:
             if self.grid.grid[x+1][y].Type != UI.CellType.Blocked:
-                neighbors.append(self.grid.grid[x+1][y])
+                neighbors.append((self.grid.grid[x+1][y].x, self.grid.grid[x+1][y].y))
         if y+1 < self.grid.width:
             if self.grid.grid[x][y+1].Type != UI.CellType.Blocked:
-                neighbors.append(self.grid.grid[x][y+1])
+                neighbors.append((self.grid.grid[x][y+1].x, self.grid.grid[x][y+1].y))
 
         return neighbors
 
+    def set_parent_node(self, parent_position: tuple, children_position: [tuple]):
+        if len(children_position) > 0:
+            for child_position in children_position:
+                x = child_position[0]
+                y = child_position[1]
+                self.grid.grid[x][y].parent = parent_position
 

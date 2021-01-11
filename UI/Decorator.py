@@ -76,3 +76,7 @@ class Cell:
         self.x = x
         self.y = y
         self.Type = kind
+        self.parent = None
+        self.fScore = None
+        self.gScore = None
+        self.hScore = None
