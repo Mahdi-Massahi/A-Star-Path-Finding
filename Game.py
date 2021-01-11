@@ -58,10 +58,10 @@ class Game:
             return []
         x, y = current
 
-        if x-1 > 0:
+        if x-1 >= 0:
             if self.grid.grid[x-1][y].Type != UI.CellType.Blocked:
                 neighbors.append((self.grid.grid[x-1][y].x, self.grid.grid[x-1][y].y))
-        if y-1 > 0:
+        if y-1 >= 0:
             if self.grid.grid[x][y-1].Type != UI.CellType.Blocked:
                 neighbors.append((self.grid.grid[x][y-1].x, self.grid.grid[x][y-1].y))
         if x+1 < self.grid.height:
