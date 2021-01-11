@@ -5,4 +5,4 @@ A start path-finding algo. implemented in Python, not really optimized and still
 simpley just run `Engine.py` 
 
 ## Screenshot
-![screenshot](https://github.com/Mahdi-Massahi/A-Star-Path-Finding/blob/master/Screenshot.png)
+![screenshot](https://github.com/Mahdi-Massahi/A-Star-Path-Finding/blob/master/Screenshot.jpg)
