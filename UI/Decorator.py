@@ -12,13 +12,13 @@ class Grid:
         self.height = height
         for i in range(self.width):
             for j in range(self.height):
-                # if randrange(0, 100) < alpha*100:
-                if (
-                        # img 1
-                        (j, i) == (2, 2) or
-                        (j, i) == (3, 2) or
-                        (j, i) == (2, 3)
-                ):
+                if randrange(0, 100) < alpha*100:
+                # if (
+                #         # img 1
+                #         (j, i) == (2, 2) or
+                #         (j, i) == (3, 2) or
+                #         (j, i) == (2, 3)
+                # ):
                     self.grid[j][i].type = CellType.Blocked
         self.start_position = (0, 0)
         self.goal_position = (self.height-1, self.width-1)
