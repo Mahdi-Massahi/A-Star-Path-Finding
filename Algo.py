@@ -21,22 +21,10 @@ class AStar:
 
             # get the current position
             current_position = self.game.get_current_position()
+            self.closed_set.append(current_position)
 
             # find neighbors of current
-            neighbors = self.game.get_neighbors_position()
-
-            # exclude those which exist in closed_set
-            for neighbor in neighbors:
-                if neighbor in self.closed_set:
-                    neighbors.remove(neighbor)
-
-            # exclude those which exist in open_set TODO is it right?!
-            for neighbor in neighbors:
-                if neighbor in self.open_set:
-                    neighbors.remove(neighbor)
-
-            # only new neighbors
-            new_neighbors = neighbors.copy()
+            new_neighbors = self.get_new_neighbors_position()
 
             # if any neighbor is left, add it to open_set
             if len(new_neighbors) > 0:
@@ -52,9 +40,10 @@ class AStar:
             self.calculate_f_scores(new_neighbors)
 
             # once again remove nodes which are closed from open_set TODO don't know why some exist for now
-            for closed_node in self.closed_set:
-                if closed_node in self.open_set:
-                    self.open_set.remove(closed_node)
+            # for closed_node in self.closed_set:
+            #     if closed_node in self.open_set:
+            #         self.open_set.remove(closed_node)
+
 
             # move to lowest f score node and get the new position
             current_position = self.move_to_lowest_f_score(self.open_set)
@@ -77,15 +66,34 @@ class AStar:
 
             # check if there is no path to goal
             if len(self.open_set) == 0 and not did_win:
-                print("No path found.")
-                is_done = True
+                new_neighbors = self.get_new_neighbors_position()
+                if len(new_neighbors) == 0:
+                    print("No path found.")
+                    is_done = True
 
             # search will continue
 
             # plot the game
+            self.game.update_visible_nodes(self.open_set)
             self.game.grid.plot()
             print("Phase done")
 
+    def get_new_neighbors_position(self):
+        neighbors = self.game.get_neighbors_position()
+
+        neighbors = [x for x in neighbors if x not in self.closed_set]
+        neighbors = [x for x in neighbors if x not in self.open_set]
+
+        # for neighbor in neighbors:
+        #     if neighbor in self.closed_set:
+        #         neighbors.remove(neighbor)
+        #
+        # # exclude those which exist in open_set TODO is it right?!
+        # for neighbor in neighbors:
+        #     if neighbor in self.open_set:
+        #         neighbors.remove(neighbor)
+
+        return neighbors
 
     @staticmethod
     def add_neighbors(old: [tuple], members: [tuple]):
@@ -106,7 +114,8 @@ class AStar:
 
     def get_g_score(self, position: tuple):
         start = self.game.grid.start_position
-        g_score = abs(start[0] - position[0]) + abs(start[1] - position[1])
+        # g_score = abs(start[0] - position[0]) + abs(start[1] - position[1])
+        g_score = math.sqrt(pow(start[0] - position[0], 2) + pow(start[1] - position[1], 2))
         return g_score
 
     def get_g_scores(self, positions: [tuple]):
@@ -124,7 +133,7 @@ class AStar:
 
     def calculate_and_get_h_score(self, position: tuple):
         goal = self.game.grid.goal_position
-        h_score = abs(goal[0] - position[0]) + abs(goal[1] - position[1])
+        h_score = math.sqrt(pow(goal[0] - position[0], 2) + pow(goal[1] - position[1], 2))
         self.game.grid.grid[position[0]][position[1]].hScore = h_score
         return h_score
 
@@ -148,19 +157,20 @@ class AStar:
 
     def move_to_lowest_f_score(self, nodes_position: [tuple]):
         if len(nodes_position) > 0:
-            f_scores = self.get_f_scores(nodes_position)
-            index_min_f_scores = f_scores.index(min(reversed(f_scores)))
-            min_f_score_node_position = nodes_position[::-1][index_min_f_scores]
+            nodes = nodes_position# [::-1]
+            f_scores = self.get_f_scores(nodes)
+            index_min_f_scores = f_scores.index(min(f_scores))
+            min_f_score_node_position = nodes_position[index_min_f_scores]
             self.game.change_current(min_f_score_node_position)
             return min_f_score_node_position
 
-    def get_shortest_path(self):
+    def get_shortest_path(self, ):
         parents = []
         start_position = self.game.grid.start_position
         current_position = self.game.get_current_position()
         while start_position != current_position:
             current_parent_position = self.game.grid.grid[current_position[0]][current_position[1]].parent
             parents.append(current_parent_position)
-            self.game.grid.grid[current_parent_position[0]][current_parent_position[1]].Type = UI.CellType.Path
+            self.game.grid.grid[current_parent_position[0]][current_parent_position[1]].type = UI.CellType.Path
             current_position = current_parent_position
         return parents

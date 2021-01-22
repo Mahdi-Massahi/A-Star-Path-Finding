@@ -1,7 +1,7 @@
 from Game import Game
 from Algo import AStar
 
-game = Game(width=15, height=15, alpha=0.2)
+game = Game(width=5, height=5, alpha=0.4)
 
 algo = AStar(game=game)
 

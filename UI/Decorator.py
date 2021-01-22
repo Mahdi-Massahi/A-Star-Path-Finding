@@ -12,19 +12,25 @@ class Grid:
         self.height = height
         for i in range(self.width):
             for j in range(self.height):
-                if randrange(0, 100) < alpha*100:
-                    self.grid[j][i].Type = CellType.Blocked
+                # if randrange(0, 100) < alpha*100:
+                if (
+                        # img 1
+                        (j, i) == (2, 2) or
+                        (j, i) == (3, 2) or
+                        (j, i) == (2, 3)
+                ):
+                    self.grid[j][i].type = CellType.Blocked
         self.start_position = (0, 0)
         self.goal_position = (self.height-1, self.width-1)
-        self.grid[0][0].Type = CellType.Start
-        self.grid[self.height-1][self.width-1].Type = CellType.Goal
+        self.grid[0][0].type = CellType.Start
+        self.grid[self.height-1][self.width-1].type = CellType.Goal
 
     def set_start(self, x, y):
-        self.grid[y][x].Type = CellType.Start
+        self.grid[y][x].type = CellType.Start
         self.start_position = (x, y)
 
     def set_goal(self, x, y):
-        self.grid[y][x].Type = CellType.Goal
+        self.grid[y][x].type = CellType.Goal
         self.goal_position = (x, y)
 
     def plot(self):
@@ -47,7 +53,7 @@ class Grid:
             print("{0:>2} ║ ".format(j), end="")
             i = 0
             for cell in row:
-                print(f"{self.grid[j][i].Type}", end="")
+                print(f"{self.grid[j][i].type}", end="")
                 if i != self.width - 1:
                     print(" ", end="")
                 i += 1
@@ -75,7 +81,7 @@ class Cell:
     def __init__(self, x, y, kind=CellType.Normal):
         self.x = x
         self.y = y
-        self.Type = kind
+        self.type = kind
         self.parent = None
         self.fScore = None
         self.gScore = None
