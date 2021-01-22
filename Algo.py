@@ -39,12 +39,6 @@ class AStar:
             # calculate f score for neighbors
             self.calculate_f_scores(new_neighbors)
 
-            # once again remove nodes which are closed from open_set TODO don't know why some exist for now
-            # for closed_node in self.closed_set:
-            #     if closed_node in self.open_set:
-            #         self.open_set.remove(closed_node)
-
-
             # move to lowest f score node and get the new position
             current_position = self.move_to_lowest_f_score(self.open_set)
 
