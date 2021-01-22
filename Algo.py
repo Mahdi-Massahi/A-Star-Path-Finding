@@ -70,7 +70,6 @@ class AStar:
             # plot the game
             self.game.update_visible_nodes(self.open_set)
             self.game.grid.plot()
-            print("Phase done")
 
     def get_new_neighbors_position(self):
         neighbors = self.game.get_neighbors_position()
