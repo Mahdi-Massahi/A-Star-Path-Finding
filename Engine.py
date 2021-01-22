@@ -1,13 +1,20 @@
 from Game import Game
 from Algo import AStar
+import random
 
-game = Game(width=15, height=15, alpha=0.4)
+ch = "Yes"
 
-algo = AStar(game=game)
+while ch[0] in ['Y', 'y']:
+    width = random.randrange(5, 20)
+    height = random.randrange(5, 20)
+    game = Game(width=width, height=height, alpha=0.5)
 
-algo.solve()
+    algo = AStar(game=game)
+    algo.solve()
 
-print(algo.game)
+    print(algo.game)
 
-input("Exit?")
+    ch = input("Repeat? (Yes/No)")
+
+
 

@@ -15,9 +15,15 @@ class Grid:
                 if randrange(0, 100) < alpha*100:
                 # if (
                 #         # img 1
-                #         (j, i) == (2, 2) or
-                #         (j, i) == (3, 2) or
-                #         (j, i) == (2, 3)
+                #         # (j, i) == (2, 2) or
+                #         # (j, i) == (3, 2) or
+                #         # (j, i) == (2, 3)
+                #
+                #         # img 2
+                #         (j, i) == (0, 2) or
+                #         (j, i) == (2, 1) or
+                #         (j, i) == (2, 3) or
+                #         (j, i) == (2, 2)
                 # ):
                     self.grid[j][i].type = CellType.Blocked
         self.start_position = (0, 0)

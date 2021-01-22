@@ -74,18 +74,8 @@ class AStar:
 
     def get_new_neighbors_position(self):
         neighbors = self.game.get_neighbors_position()
-
         neighbors = [x for x in neighbors if x not in self.closed_set]
         neighbors = [x for x in neighbors if x not in self.open_set]
-
-        # for neighbor in neighbors:
-        #     if neighbor in self.closed_set:
-        #         neighbors.remove(neighbor)
-        #
-        # # exclude those which exist in open_set TODO is it right?!
-        # for neighbor in neighbors:
-        #     if neighbor in self.open_set:
-        #         neighbors.remove(neighbor)
 
         return neighbors
 
@@ -136,8 +126,7 @@ class AStar:
             for node_position in nodes_position:
                 x = node_position[0]
                 y = node_position[1]
-                f_score = self.calculate_and_get_g_score((x, y)) + \
-                          self.calculate_and_get_h_score((x, y))
+                f_score = self.calculate_and_get_g_score((x, y)) + self.calculate_and_get_h_score((x, y))
                 self.game.grid.grid[x][y].fScore = f_score
 
     def get_f_scores(self, nodes_position: [tuple]):
@@ -151,11 +140,12 @@ class AStar:
 
     def move_to_lowest_f_score(self, nodes_position: [tuple]):
         if len(nodes_position) > 0:
-            nodes = nodes_position# [::-1]
+            nodes = nodes_position  # [::-1]
             f_scores = self.get_f_scores(nodes)
             index_min_f_scores = f_scores.index(min(f_scores))
             min_f_score_node_position = nodes_position[index_min_f_scores]
             self.game.change_current(min_f_score_node_position)
+
             return min_f_score_node_position
 
     def get_shortest_path(self, ):
