@@ -13,6 +13,3 @@ while ch == "":
     algo.solve()
 
     ch = input("Repeat? (Yes: Enter)")
-
-
-
